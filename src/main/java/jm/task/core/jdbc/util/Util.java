@@ -62,5 +62,4 @@ public class Util {
     public static void closeSession() {
         sessionFactory.close();
     }
-
 }
