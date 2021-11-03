@@ -21,7 +21,12 @@ public class UserDaoHibernateImpl implements UserDao {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            String SQL = "DROP TABLE IF EXISTS users ";
+            String SQL = "CREATE TABLE IF NOT EXISTS users " +
+                    "(id BIGINT not NULL AUTO_INCREMENT, " +
+                    " name VARCHAR (20) not NULL, " +
+                    " lastname VARCHAR (30) not NULL, " +
+                    " age TINYINT not NULL, " +
+                    " PRIMARY KEY (id))";
 
             session.createSQLQuery(SQL);
             session.getTransaction().commit();
@@ -36,12 +41,7 @@ public class UserDaoHibernateImpl implements UserDao {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            String SQL = "CREATE TABLE IF NOT EXISTS users " +
-                    "(id BIGINT not NULL AUTO_INCREMENT, " +
-                    " name VARCHAR (20) not NULL, " +
-                    " lastname VARCHAR (30) not NULL, " +
-                    " age TINYINT not NULL, " +
-                    " PRIMARY KEY (id))";
+            String SQL = "DROP TABLE IF EXISTS users ";
 
             session.createSQLQuery(SQL);
             session.getTransaction().commit();
@@ -102,10 +102,12 @@ public class UserDaoHibernateImpl implements UserDao {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            List<User> users = session.createQuery("From User").list();
-            for (User user : users) {
-                session.delete(user);
-            }
+            session.delete("From User");
+
+//            List<User> users = session.createQuery("From User").list();
+//            for (User user : users) {
+//                session.delete(user);
+//            }
 
             session.getTransaction().commit();
         } catch (Exception e) {
